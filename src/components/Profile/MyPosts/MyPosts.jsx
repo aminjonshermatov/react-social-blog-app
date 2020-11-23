@@ -2,38 +2,31 @@ import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 
-const postData = [
-    {
-        id: 1,
-        message: 'Hi, how are you',
-        likes: 0
-    },
-    {
-        id: 2,
-        message: 'It is my first post',
-        likes: 12
-    },
-    {
-        id: 3,
-        message: 'Posts is gooood',
-        likes: 32
-    },
-];
+const MyPosts = ({ posts, addPost, newPostText, updateNewPostText }) => {
+    const newPostElement = React.createRef();
 
-const MyPosts = () => {
+    const addNewPost = () => {
+        addPost();
+    };
+
+    const onChange = () => {
+        const text = newPostElement.current.value;
+        updateNewPostText(text);
+    };
+
     return (
         <div className={classes.postsBlock}>
             <h3>My post</h3>
             <div>
                 <div>
-                    <textarea cols="40" rows="6"></textarea>
+                    <textarea ref={newPostElement} onChange={onChange} value={newPostText} cols="40" rows="6" />
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addNewPost}>Add post</button>
                 </div>
             </div>
             <div className={classes.posts}>
-                {postData.map(({ id, message, likes }) => <Post key={id} message={message} likes={likes} />)}
+                {posts.map(({ id, message, likes }) => <Post key={id} message={message} likes={likes} />)}
             </div>
         </div>
     )

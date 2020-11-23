@@ -3,7 +3,7 @@ import classes from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogsItem';
 import Message from './Message/Message';
 
-const dialogsData = [
+/* const dialogsData = [
     {
         name: 'Aminjon',
         id: 1
@@ -47,16 +47,16 @@ const messagesData = [
         message: 'Goodbye',
         id: 4
     }
-];
+]; */
 
-const Dialogs = () => {
+const Dialogs = ({ state }) => {
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsItems}>
-                {dialogsData.map(({ name, id}) => <DialogItem key={id} name={name} id={id} />)}
+                {state.dialogs.map(({ name, id}) => <DialogItem key={id} name={name} id={id} />)}
             </div>
             <div className={classes.messages}>
-                {messagesData.map(({ message, id }) => <Message key={id} message={message} />)}
+                {state.messages.map(({ message, id }) => <Message key={id} message={message} />)}
             </div>
         </div>
     )
