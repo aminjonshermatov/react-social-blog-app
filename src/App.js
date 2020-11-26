@@ -6,14 +6,14 @@ import Profile from "./components/Profile/Profile";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { Route } from "react-router-dom";
 
-const App = ({ state, dispatch }) => {
+const App = () => {
   return (
     <div className='app-wrapper'>
       <Header />
       <Navbar />
       <div className='app-wrapper-content'>
-        <Route path='/profile' render={() => <Profile state={state.profilePage} dispatch={dispatch} />} />
-        <Route path='/dialogs' render={() => <DialogsContainer  state={state.dialogsPage} dispatch={dispatch} />} />
+        <Route path='/profile' render={() => <Profile />} />
+        <Route path='/dialogs' render={() => <DialogsContainer />} />
       </div>
     </div>
   );
