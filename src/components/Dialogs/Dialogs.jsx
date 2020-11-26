@@ -2,30 +2,29 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogsItem';
 import Message from './Message/Message';
-import { sendMessageCreator, updateNewMessageTextActionCreator } from '../../redux/dialogsReducer';
 
-const Dialogs = ({ state, dispatch }) => {
+const Dialogs = ({ sendMessage, updateNewMessageText, dialogs, messages, newMessageBody }) => {
     const handleSendMessage = () => {
-        dispatch(sendMessageCreator());
+        sendMessage();
     };
 
     const handleChangeMessage = ev => {
         const { value } = ev.target;
-        dispatch(updateNewMessageTextActionCreator(value));
+        updateNewMessageText(value);
     };
 
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsItems}>
-                {state.dialogs.map(({ name, id}) => <DialogItem key={id} name={name} id={id} />)}
+                {dialogs.map(({ name, id}) => <DialogItem key={id} name={name} id={id} />)}
             </div>
             <div className={classes.messages}>
                 <div>
-                    {state.messages.map(({ message, id }) => <Message key={id} message={message} />)}
+                    {messages.map(({ message, id }) => <Message key={id} message={message} />)}
                 </div>
                 <div>
                     <textarea
-                        value={state.newMessageBody}
+                        value={newMessageBody}
                         onChange={handleChangeMessage}
                         cols="20"
                         rows="3"

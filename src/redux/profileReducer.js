@@ -1,7 +1,28 @@
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 
-const profileReducer = (state, { type, payload }) => {
+const initialSate = {
+    posts: [
+        {
+            id: 1,
+            message: 'Hi, how are you',
+            likes: 0
+        },
+        {
+            id: 2,
+            message: 'It is my first post',
+            likes: 12
+        },
+        {
+            id: 3,
+            message: 'Posts is gooood',
+            likes: 32
+        }
+    ],
+    newPostText: 'example'
+};
+
+const profileReducer = (state = initialSate, { type, payload }) => {
     switch (type) {
         case ADD_POST:
             const newPost = {
