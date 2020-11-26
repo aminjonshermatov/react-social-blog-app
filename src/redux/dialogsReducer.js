@@ -53,7 +53,7 @@ const dialogsReducer = (state = initialSate, { type, payload }) => {
     switch (type) {
         case UPDATE_NEW_MESSAGE_BODY:
             state.newMessageBody = payload.text;
-            return state;
+            return {...state};
         case SEND_MESSAGE:
             const newMessage = {
                 message: state.newMessageBody,
@@ -61,9 +61,9 @@ const dialogsReducer = (state = initialSate, { type, payload }) => {
             };
             state.newMessageBody = '';
             state.messages.push(newMessage);
-            return state;
+            return {...state};
         default:
-            return state;
+            return {...state};
     }
 };
 
