@@ -1,9 +1,8 @@
-const ADD_POST = 'ADD_POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
-const SEND_MESSAGE = 'SEND_MESSAGE';
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+import sidebarReducer from "./sidebarReducer";
 
-let store = {
+const store = {
     _state: {
         profilePage: {
             posts: [
@@ -71,7 +70,8 @@ let store = {
                 }
             ],
             newMessageBody: ''
-        }
+        },
+        sidebar: {}
     },
     _callSubscriber() {
         console.log('state was chanded');
@@ -84,63 +84,12 @@ let store = {
         this._callSubscriber = obsebver;
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            const newPost = {
-                id: Date.now(),
-                message: this._state.profilePage.newPostText,
-                likes: parseInt(Math.random() * 60)
-            };
-        
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-        
-            this._callSubscriber(this.getState());
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.payload.text;
-            this._callSubscriber(this.getState());
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            this._state.dialogsPage.newMessageBody = action.payload.text;
-            this._callSubscriber(this.getState());
-        } else if (action.type === SEND_MESSAGE) {
-            const newMessage = {
-                message: this._state.dialogsPage.newMessageBody,
-                id: Date.now()
-            };
-            this._state.dialogsPage.newMessageBody = '';
-            this._state.dialogsPage.messages.push(newMessage);
-            this._callSubscriber(this.getState());
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+
+        this._callSubscriber(this.getState());
     }
-};
-
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    };
-};
-
-export const updateNewPostTextActionCreator = text => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        payload: {
-            text
-        }
-    };
-};
-
-export const sendMessageCreator = () => {
-    return {
-        type: SEND_MESSAGE
-    };
-};
-
-export const updateNewMessageTextActionCreator = text => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        payload: {
-            text
-        }
-    };
 };
 
 window.store = store;
