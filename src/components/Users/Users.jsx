@@ -1,54 +1,25 @@
 import React from 'react'
 import classes from './Users.module.css';
+import * as axios from 'axios';
+import userPhoto from '../../assets/images/user.png';
 
 const Users = ({ users, follow, unFollow, setUsers }) => {
-    if (users.length === 0) {
-        setUsers([
-            {
-                id: 1,
-                fullName: 'Aminjon',
-                photoUrl: 'https://img.lovepik.com/free_png/32/23/59/58PIC1b58PICVKYThNME6ABdg_PIC2018.png_860.png',
-                status: 'less knows more stupid',
-                location: {
-                    country: 'Tajiksitan',
-                    city: 'Khujand'
-                },
-                followed: true
-            },
-            {
-                id: 2,
-                fullName: 'Azamat',
-                photoUrl: 'https://img.lovepik.com/free_png/32/23/59/58PIC1b58PICVKYThNME6ABdg_PIC2018.png_860.png',
-                status: 'physics is the best',
-                location: {
-                    country: 'Tajikistan_01',
-                    city: 'Khujand_01'
-                },
-                followed: false
-            },
-            {
-                id: 3,
-                fullName: 'Mehrona',
-                photoUrl: 'https://img.lovepik.com/free_png/32/23/59/58PIC1b58PICVKYThNME6ABdg_PIC2018.png_860.png',
-                status: 'i am a kayk',
-                location: {
-                    country: 'Tajikistan_02',
-                    city: 'Khujand_02'
-                },
-                followed: false
-            }
-        ]);
-    }
-    
+    const getUsers = () => {
+        if (users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then(response => setUsers(response.data.items))
+        }
+    };
 
     return (
         <div>
+            {users.length === 0 ? <button onClick={getUsers}>Get Users</button> : ''}
             {
-                users.map(({ id, fullName, status, location, followed, photoUrl }) => (
+                users.map(({ id, name, status, location, followed, photos }) => (
                     <div key={id}>
                         <span>
                             <div>
-                                <img alt="user" src={photoUrl} className={classes.userPhoto} />
+                                <img alt="user" src={photos.small !== null ? photos.small : userPhoto} className={classes.userPhoto} />
                             </div>
                             <div>
                                 {
@@ -61,7 +32,7 @@ const Users = ({ users, follow, unFollow, setUsers }) => {
                         <span>
                             <span>
                                 <div>
-                                    {fullName}
+                                    {name}
                                 </div>
                                 <div>
                                     {status}
@@ -69,10 +40,10 @@ const Users = ({ users, follow, unFollow, setUsers }) => {
                             </span>
                             <span>
                                 <div>
-                                    {location.city}
+                                    {'location.city'}
                                 </div>
                                 <div>
-                                    {location.country}
+                                    {'location.country'}
                                 </div>
                             </span>
                         </span>
