@@ -24,20 +24,28 @@ const initialSate = {
 
 const profileReducer = (state = initialSate, { type, payload }) => {
     switch (type) {
-        case ADD_POST:
-            const newPost = {
-                id: Date.now(),
-                message: state.newPostText,
-                likes: parseInt(Math.random() * 60)
+        case ADD_POST: {
+            return {
+                ...state,
+                posts: [
+                    ...state.posts,
+                    {
+                        id: Date.now(),
+                        message: state.newPostText,
+                        likes: parseInt(Math.random() * 60)
+                    }
+                ],
+                newPostText: ''
             };
-            state.posts.push(newPost);
-            state.newPostText = '';
-            return {...state};
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = payload.text;
-            return {...state};
+        }
+        case UPDATE_NEW_POST_TEXT: {
+            return {
+                ...state,
+                newPostText: payload.text
+            };
+        }
         default:
-            return {...state};
+            return state;
     }
 };
 

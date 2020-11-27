@@ -52,18 +52,24 @@ const initialSate = {
 const dialogsReducer = (state = initialSate, { type, payload }) => {
     switch (type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = payload.text;
-            return {...state};
-        case SEND_MESSAGE:
-            const newMessage = {
-                message: state.newMessageBody,
-                id: Date.now()
+            return {
+                ...state,
+                newMessageBody: payload.text
             };
-            state.newMessageBody = '';
-            state.messages.push(newMessage);
-            return {...state};
+        case SEND_MESSAGE:
+            return {
+                ...state,
+                messages: [
+                    ...state.messages,
+                    {
+                        message: state.newMessageBody,
+                        id: Date.now()
+                    }
+                ],
+                newMessageBody: ''
+            };
         default:
-            return {...state};
+            return state;
     }
 };
 
