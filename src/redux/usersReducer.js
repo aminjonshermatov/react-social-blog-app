@@ -1,9 +1,14 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 const initialSate = {
-    users: []
+    users: [],
+    pageSize: 50,
+    totalUsersCount: 0,
+    currentPage: 3
 };
 
 const usersReducer = (state = initialSate, { type, payload }) => {
@@ -22,9 +27,18 @@ const usersReducer = (state = initialSate, { type, payload }) => {
             return {
                 ...state,
                 users: [
-                    ...state.users,
                     ...payload.users
                 ]
+            };
+        case SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: payload.currentPage
+            };
+        case SET_TOTAL_USERS_COUNT:
+            return {
+                ...state,
+                totalUsersCount: payload.totalUsersCount
             };
         default:
             return state;
@@ -54,6 +68,24 @@ export const setUsersAC = users => {
         type: SET_USERS,
         payload: {
             users
+        }
+    };
+};
+
+export const setCurrentPageAC = page => {
+    return {
+        type: SET_CURRENT_PAGE,
+        payload: {
+            currentPage: page
+        }
+    };
+};
+
+export const setUsersTotalCountAC = totalUsersCount => {
+    return {
+        type: SET_TOTAL_USERS_COUNT,
+        payload: {
+            totalUsersCount
         }
     };
 };
