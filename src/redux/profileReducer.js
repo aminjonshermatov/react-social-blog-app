@@ -1,5 +1,6 @@
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 const initialSate = {
     posts: [
@@ -19,7 +20,8 @@ const initialSate = {
             likes: 32
         }
     ],
-    newPostText: 'example'
+    newPostText: 'example',
+    profile: {}
 };
 
 const profileReducer = (state = initialSate, { type, payload }) => {
@@ -44,6 +46,12 @@ const profileReducer = (state = initialSate, { type, payload }) => {
                 newPostText: payload.text
             };
         }
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                profile: payload.profile
+            };
+        }
         default:
             return state;
     }
@@ -60,6 +68,15 @@ export const updateNewPostTextActionCreator = text => {
         type: UPDATE_NEW_POST_TEXT,
         payload: {
             text
+        }
+    };
+};
+
+export const setUserProfile = profile => {
+    return {
+        type: SET_USER_PROFILE,
+        payload: {
+            profile
         }
     };
 };
