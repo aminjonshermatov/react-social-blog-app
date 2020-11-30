@@ -52,7 +52,7 @@ const usersReducer = (state = initialSate, { type, payload }) => {
     }
 };
 
-export const followAC = id => {
+export const follow = id => {
     return {
         type: FOLLOW,
         payload: {
@@ -61,7 +61,7 @@ export const followAC = id => {
     };
 };
 
-export const unFollowAC = id => {
+export const unFollow = id => {
     return {
         type: UNFOLLOW,
         payload: {
@@ -70,7 +70,7 @@ export const unFollowAC = id => {
     };
 };
 
-export const setUsersAC = users => {
+export const setUsers = users => {
     return {
         type: SET_USERS,
         payload: {
@@ -79,7 +79,7 @@ export const setUsersAC = users => {
     };
 };
 
-export const setCurrentPageAC = page => {
+export const setCurrentPage = page => {
     return {
         type: SET_CURRENT_PAGE,
         payload: {
@@ -88,7 +88,7 @@ export const setCurrentPageAC = page => {
     };
 };
 
-export const setUsersTotalCountAC = totalUsersCount => {
+export const setUsersTotalCount = totalUsersCount => {
     return {
         type: SET_TOTAL_USERS_COUNT,
         payload: {
@@ -97,7 +97,7 @@ export const setUsersTotalCountAC = totalUsersCount => {
     };
 };
 
-export const toggleIsFetchingAC = isFetching => {
+export const toggleIsFetching = isFetching => {
     return {
         type: TOGGLE_IS_FETCHING,
         payload: {

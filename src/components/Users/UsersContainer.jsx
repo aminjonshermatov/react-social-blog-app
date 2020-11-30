@@ -3,12 +3,12 @@ import * as axios from 'axios';
 import Users from './Users';
 import { connect } from "react-redux";
 import {
-    followAC,
-    unFollowAC,
-    setUsersAC,
-    setCurrentPageAC,
-    setUsersTotalCountAC,
-    toggleIsFetchingAC
+    follow,
+    unFollow,
+    setUsers,
+    setCurrentPage,
+    setUsersTotalCount,
+    toggleIsFetching
 } from '../../redux/usersReducer';
 import Loader from '../Loader/Loader'
 
@@ -18,7 +18,7 @@ class UsersContainer extends React.Component {
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
+                this.props.setUsersTotalCount(response.data.totalCount);
                 this.props.toggleIsFetching(false);
             });
     }
@@ -65,13 +65,13 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
+/* const mapDispatchToProps = dispatch => {
     return {
         follow: userId => {
-            dispatch(followAC(userId))
+            dispatch(followAC(userId));
         },
         unFollow: userId => {
-            dispatch(unFollowAC(userId))
+            dispatch(unFollowAC(userId));
         },
         setUsers: users => {
             dispatch(setUsersAC(users));
@@ -86,6 +86,16 @@ const mapDispatchToProps = dispatch => {
             dispatch(toggleIsFetchingAC(isFetching));
         }
     };
-};
+}; */
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(
+    mapStateToProps,
+    {
+        follow,
+        unFollow,
+        setUsers,
+        setCurrentPage,
+        setUsersTotalCount,
+        toggleIsFetching
+    }
+)(UsersContainer);
