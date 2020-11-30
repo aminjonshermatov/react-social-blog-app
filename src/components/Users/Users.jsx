@@ -1,31 +1,51 @@
 import React from 'react'
 import classes from './Users.module.css';
-import * as axios from 'axios';
 import userPhoto from '../../assets/images/user.png';
 
-const Users = ({ users, follow, unFollow, setUsers }) => {
-    const getUsers = () => {
-        if (users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(response => setUsers(response.data.items))
-        }
-    };
+const Users = props => {
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
+    const pages = [];
+
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+    }
+    
     return (
         <div>
-            {users.length === 0 ? <button onClick={getUsers}>Get Users</button> : ''}
+            <div>
+                {
+                    pages.map(num => {
+                        return (
+                            <span
+                                className={props.currentPage === num ? classes.selectedPage : ''}
+                                key={num}
+                                onClick={() => props.onPageChanged(num)}
+                            >
+                                {num}
+                            </span>
+                        );
+                    })
+                }
+            </div>
             {
-                users.map(({ id, name, status, location, followed, photos }) => (
+                props.users.map(({ id, name, status, followed, photos }) => (
                     <div key={id}>
                         <span>
                             <div>
-                                <img alt="user" src={photos.small !== null ? photos.small : userPhoto} className={classes.userPhoto} />
+                                <img
+                                    alt="user"
+                                    src={photos.small !== null
+                                            ? photos.small
+                                            : userPhoto
+                                        }
+                                    className={classes.userPhoto} />
                             </div>
                             <div>
                                 {
                                     followed
-                                        ? <button onClick={() => unFollow(id)}>Unfollow</button>
-                                        : <button onClick={() => follow(id)}>Follow</button>
+                                        ? <button onClick={() => props.unFollow(id)}>Unfollow</button>
+                                        : <button onClick={() => props.follow(id)}>Follow</button>
                                 }
                             </div>
                         </span>
@@ -51,7 +71,7 @@ const Users = ({ users, follow, unFollow, setUsers }) => {
                 ))
             }
         </div>
-    )
+    );
 }
 
 export default Users;
