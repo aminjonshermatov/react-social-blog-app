@@ -15,7 +15,7 @@ const Dialogs = ({ sendMessage, updateNewMessageText, dialogs, messages, newMess
     };
 
     return (
-        isAuth
+        !isAuth
             ? <Redirect to={"/login"} />
             : (
                 <div className={classes.dialogs}>

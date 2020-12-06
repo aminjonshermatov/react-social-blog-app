@@ -1,5 +1,4 @@
 import React from 'react'
-import { usersAPI } from '../../api/api';
 import classes from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import { NavLink } from 'react-router-dom';
