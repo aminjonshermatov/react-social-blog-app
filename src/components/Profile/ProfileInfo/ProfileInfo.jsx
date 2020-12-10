@@ -3,7 +3,7 @@ import classes from './ProfileInfo.module.css';
 import Loader from '../../Loader/Loader';
 import ProfileStatus from './ProfileStatus';
 
-const ProfileInfo = ({ profile }) => {
+const ProfileInfo = ({ profile, status, updateStatus }) => {
     if (!profile) {
         return (
             <Loader />
@@ -19,7 +19,7 @@ const ProfileInfo = ({ profile }) => {
             </div> */}
             <div className={classes.descriptionBlock}>
                 <img src={photos?.large} alt="small"/>
-                <ProfileStatus status={'hello'} />
+                <ProfileStatus status={status} updateStatus={updateStatus} />
             </div>
         </div>
     )
