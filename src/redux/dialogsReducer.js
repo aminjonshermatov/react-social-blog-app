@@ -1,4 +1,3 @@
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
 const SEND_MESSAGE = 'SEND_MESSAGE';
 
 const initialSate = {
@@ -45,45 +44,32 @@ const initialSate = {
             name: 'Jataroq',
             id: 6
         }
-    ],
-    newMessageBody: ''
+    ]
 };
 
 const dialogsReducer = (state = initialSate, { type, payload }) => {
     switch (type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: payload.text
-            };
         case SEND_MESSAGE:
             return {
                 ...state,
                 messages: [
                     ...state.messages,
                     {
-                        message: state.newMessageBody,
+                        message: payload.newMessageBody,
                         id: Date.now()
                     }
-                ],
-                newMessageBody: ''
+                ]
             };
         default:
             return state;
     }
 };
 
-export const sendMessageCreator = () => {
+export const sendMessageCreator = newMessageBody => {
     return {
-        type: SEND_MESSAGE
-    };
-};
-
-export const updateNewMessageTextActionCreator = text => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
+        type: SEND_MESSAGE,
         payload: {
-            text
+            newMessageBody
         }
     };
 };
